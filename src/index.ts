@@ -1,46 +1,24 @@
 import * as express from 'express';
-import authRouter from './auth/auth.route';
+import * as cors from 'cors';
+import 'dotenv/config';
 
-class Server {
-  public app: express.Application;
+//routes
+import authRouter from './routes/auth.route';
 
-  constructor() {
-    const app: express.Application = express();
-    this.app = app;
-  }
-  private setRoute() {
-    this.app.use(authRouter);
-  }
+const app = express();
 
-  private setMiddleware() {
-    // logging middleware
-    this.app.use((req, res, next) => {
-      console.log(req.rawHeaders[1]);
-      console.log('this is logging middleware');
-    });
+app.use(express.json());
+app.use(cors());
 
-    //json middleware
-    this.app.use(express.json());
+//routes
+app.use(authRouter);
 
-    this.setRoute();
+app.get('/', (req, res) => {
+  res.send('test server');
+});
 
-    //* 404 middleware
-    this.app.use((req, res, next) => {
-      console.log('this is error middleware');
-      res.send({ error: '404 not found error' });
-    });
-  }
-  public listen() {
-    this.setMiddleware();
-    this.app.listen(5001, () => {
-      console.log('server is on...');
-    });
-  }
-}
+const PORT = process.env.SEVER_PORT;
 
-function init() {
-  const server = new Server();
-  server.listen();
-}
-
-init();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
