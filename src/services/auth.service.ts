@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import sql from '../config/db.config';
+import bcrypt from 'bcrypt';
 
 //type
 import { UserType, RegisterType } from '../types/auth';
-const bcrypt = require('bcrypt');
-const sql = require('../config/db.config.ts');
 
 class authService {
+  //* 1. 회원가입
   static async addUser(user: RegisterType) {
     try {
       // 비밀번호 해쉬화
@@ -19,7 +20,11 @@ class authService {
           [user.email, hashedPassword, user.name],
         );
 
-      return;
+      return {
+        success: true,
+        status: 201,
+        message: 'User created successfully',
+      };
     } catch (error) {
       if (error instanceof Error) {
         console.log(error);
@@ -27,12 +32,12 @@ class authService {
       }
     }
   }
-
+  //* 2. 로그인
   static async findUser({ email, password }: UserType) {
     try {
       const [findByEmail] = await sql
         .promise()
-        .query('SELECT * from users WHERE email = ? ', [email]);
+        .query('SELECT * FROM users WHERE email = ? ', [email]);
 
       if (findByEmail.length === 0) {
         const errorMessage = '존재하지 않는 회원입니다.';
@@ -60,7 +65,11 @@ class authService {
           expiresIn: process.env.JWT_EXPIRES,
         },
       );
-      return { token: userToken };
+      return {
+        success: true,
+        status: 201,
+        token: userToken,
+      };
     } catch (error) {
       console.error(error);
       throw error;

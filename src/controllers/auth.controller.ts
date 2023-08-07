@@ -18,7 +18,7 @@ const loginValidator = Joi.object({
 });
 
 class authController {
-  //* CREATE 회원가입
+  //* 1. 회원가입
   static async register(req: Request, res: Response, next: NextFunction) {
     try {
       const { name, email, password, checkPassword } =
@@ -30,8 +30,7 @@ class authController {
         checkPassword,
         name,
       });
-
-      return res.status(201).send({ message: 'User created successfully' });
+      return res.status(201).send(newUser);
     } catch (error) {
       if (error instanceof Error) {
         return res.status(400).send({ success: false, error: error.message });
@@ -44,6 +43,7 @@ class authController {
     });
   }
 
+  //* 2. 로그인
   static async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = await loginValidator.validateAsync(req.body);
