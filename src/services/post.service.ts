@@ -23,6 +23,7 @@ class postService {
     }
   }
   //* 2. 게시물 목록 조회
+  // 페이지네이션!!!
   static async getLists() {
     try {
       const [getPosts] = await sql.promise().query('SELECT * FROM posts;');
@@ -52,6 +53,8 @@ class postService {
   //* 4. 특정 게시물 수정
   static async updatePost(postInfo: PostInfoType) {
     try {
+      // 입력값이 없을 경우 에러 보내기
+      // 작성자만 수정 가능
       const [post] = await sql
         .promise()
         .query('UPDATE posts SET title=?, description=? WHERE id = ? ', [
@@ -72,6 +75,7 @@ class postService {
     }
   }
   //* 5. 특정 게시물 삭제
+  // 작성자만 삭제 가능
   static async removePost({ id }: PostParamsType) {
     try {
       const post = await sql

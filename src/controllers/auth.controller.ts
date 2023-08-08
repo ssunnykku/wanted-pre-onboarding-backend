@@ -3,7 +3,7 @@ import authService from '../services/auth.service';
 import Joi from 'joi';
 
 //type
-import { UserType, RegisterType } from '../types/auth';
+import { RegisterType } from '../types/auth';
 
 const registerValidator = Joi.object({
   name: Joi.string().trim().required(),
