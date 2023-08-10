@@ -9,7 +9,7 @@ const postReqValidator = Joi.object({
 });
 
 class postController {
-  //* 1. 게시물 생성
+  //* 과제 3. 게시물 생성
   static async createPost(req: Request, res: Response, next: NextFunction) {
     try {
       const { title, description } = await postReqValidator.validateAsync(
@@ -21,16 +21,17 @@ class postController {
       next(error);
     }
   }
-  //* 2. 게시물 목록 조회
+  //* 과제 4. 게시물 목록 조회
   static async getPosts(req: Request, res: Response, next: NextFunction) {
     try {
-      const posts = await postService.getLists();
+      const page = Number(req.query.page);
+      const posts = await postService.getLists({ page });
       return res.status(200).send(posts);
     } catch (error) {
       next(error);
     }
   }
-  //* 3. 특정 게시물 조회
+  //* 과제 5. 특정 게시글 조회
   static async getPost(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params as unknown as PostParamsType;
@@ -41,7 +42,7 @@ class postController {
       next(error);
     }
   }
-  //* 4. 특정 게시물 수정
+  //* 과제 6. 특정 게시글 수정
   static async editPost(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params as PostParamsType;
@@ -55,7 +56,7 @@ class postController {
       next(error);
     }
   }
-  //* 5. 특정 게시물 삭제
+  //* 과제 7. 특정 게시글 삭제
   static async deletePost(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params as unknown as PostParamsType;

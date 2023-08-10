@@ -11,13 +11,6 @@ import postRouter from './routes/post.route';
 
 const app: express.Express = express();
 
-//** logging middleware */
-// app.use((req, res, next) => {
-//   console.log(req.rawHeaders[1]);
-//   console.log('this is logging middleware');
-//   next();
-// });
-
 app.use(express.json());
 app.use(cors());
 

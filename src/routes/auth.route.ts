@@ -3,9 +3,9 @@ import { Router } from 'express';
 
 const authRouter = Router();
 
-//* 1. 회원가입
+//* 과제 1. 회원가입
 authRouter.post('/signup', authController.register);
-//* 2. 로그인
+//* 과제 2. 로그인
 authRouter.post('/login', authController.login);
 
 export default authRouter;

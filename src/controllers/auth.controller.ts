@@ -18,7 +18,7 @@ const loginValidator = Joi.object({
 });
 
 class authController {
-  //* 1. 회원가입
+  //* 과제 1. 회원가입
   static async register(req: Request, res: Response, next: NextFunction) {
     try {
       const { name, email, password, checkPassword } =
@@ -43,7 +43,7 @@ class authController {
     });
   }
 
-  //* 2. 로그인
+  //* 과제 2. 로그인
   static async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = await loginValidator.validateAsync(req.body);

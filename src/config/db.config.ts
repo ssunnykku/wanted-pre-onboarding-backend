@@ -31,6 +31,3 @@ connection.connect((error: any) => {
 // connection.end();
 
 export default connection;
-
-// https://github.com/lordmyshepherd-edu/wanted-pre-onboardung-backend-selection-assignment
-// https://1-day-1-coding.tistory.com/51

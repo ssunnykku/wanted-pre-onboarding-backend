@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 import { UserType, RegisterType } from '../types/auth';
 
 class authService {
-  //* 1. 회원가입
+  //* 과제 1. 회원가입
   static async addUser(user: RegisterType) {
     try {
       // 비밀번호 해쉬화
@@ -32,7 +32,7 @@ class authService {
       }
     }
   }
-  //* 2. 로그인
+  //* 과제 2. 로그인
   static async findUser({ email, password }: UserType) {
     try {
       const [findByEmail] = await sql

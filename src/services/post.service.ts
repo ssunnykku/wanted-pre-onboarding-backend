@@ -1,8 +1,11 @@
 import sql from '../config/db.config';
 import { PostInfoType, PostType, PostParamsType } from '../types/post';
 
+interface PageType {
+  page?: number;
+}
 class postService {
-  //* 1. 게시물 생성
+  //* 과제 3. 게시물 생성
   static async savePost({ title, description }: PostType) {
     try {
       const [newPost] = await sql
@@ -22,11 +25,23 @@ class postService {
       }
     }
   }
-  //* 2. 게시물 목록 조회
-  // 페이지네이션!!!
-  static async getLists() {
+
+  //* 과제 4. 게시물 목록 조회
+  static async getLists({ page }: PageType) {
     try {
-      const [getPosts] = await sql.promise().query('SELECT * FROM posts;');
+      // 페이지네이션 : 게시물 8개씩 보여주기
+      const [cursorPage] = await sql
+        .promise()
+        .query(`SELECT * FROM posts ORDER BY id desc LIMIT ?;`, [
+          page ? page * 8 - 1 : 1,
+        ]);
+      const cursor = cursorPage.slice(-1)[0].id;
+
+      const [getPosts] = await sql
+        .promise()
+        .query(`SELECT * FROM posts WHERE id < ? ORDER BY id desc limit 8`, [
+          cursor,
+        ]);
 
       return getPosts;
     } catch (error) {
@@ -36,7 +51,7 @@ class postService {
     }
   }
 
-  //* 3. 특정 게시물 조회
+  //* 과제 5. 특정 게시글 조회
   static async findById({ id }: PostParamsType) {
     try {
       const [getPost] = await sql
@@ -50,7 +65,7 @@ class postService {
       }
     }
   }
-  //* 4. 특정 게시물 수정
+  //* 과제 6. 특정 게시글 수정
   static async updatePost(postInfo: PostInfoType) {
     try {
       // 입력값이 없을 경우 에러 보내기
@@ -74,7 +89,7 @@ class postService {
       }
     }
   }
-  //* 5. 특정 게시물 삭제
+  //* 과제 7. 특정 게시글 삭제
   // 작성자만 삭제 가능
   static async removePost({ id }: PostParamsType) {
     try {
