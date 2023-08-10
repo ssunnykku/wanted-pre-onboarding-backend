@@ -30,18 +30,24 @@ class postService {
   static async getLists({ page }: PageType) {
     try {
       // 페이지네이션 : 게시물 8개씩 보여주기
-      const [cursorPage] = await sql
-        .promise()
-        .query(`SELECT * FROM posts ORDER BY id desc LIMIT ?;`, [
-          page ? page * 8 - 1 : 1,
-        ]);
-      const cursor = cursorPage.slice(-1)[0].id;
+      const POSTS_PER_PAGE = 8;
+      let cursor: number | undefined;
+      if (page && page > 1) {
+        const [cursorData] = await sql
+          .promise()
+          .query(`SELECT id FROM posts ORDER BY id desc LIMIT ?,1;`, [
+            (page - 1) * POSTS_PER_PAGE - 1,
+          ]);
+        cursor = cursorData[0].id;
+      }
 
-      const [getPosts] = await sql
-        .promise()
-        .query(`SELECT * FROM posts WHERE id < ? ORDER BY id desc limit 8`, [
-          cursor,
-        ]);
+      const queryParams = cursor ? [cursor, POSTS_PER_PAGE] : [POSTS_PER_PAGE];
+
+      const queryStr = cursor
+        ? `SELECT * FROM posts WHERE id < ? ORDER BY id desc LIMIT ?`
+        : `SELECT * FROM posts ORDER BY id desc LIMIT ?`;
+
+      const [getPosts] = await sql.promise().query(queryStr, queryParams);
 
       return getPosts;
     } catch (error) {
