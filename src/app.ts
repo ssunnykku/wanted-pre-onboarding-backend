@@ -19,11 +19,11 @@ app.use(authRouter);
 app.use(postRouter);
 
 //* 404 middleware
-app.use((req, res, next) => {
-  console.log('this is error middleware');
-  res.send({ error: '404 not found error' });
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('this is error middleware');
+//   res.send({ error: '404 not found error' });
+//   next();
+// });
 
 app.use(errorMiddleware);
 

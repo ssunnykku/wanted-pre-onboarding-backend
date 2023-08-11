@@ -1,12 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ApiError from '../utils/ApiError';
 
-export default (
-  err: Error | null,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export default (err: any, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof ApiError) {
     console.log(
       '\x1b[31m',

@@ -1,19 +1,20 @@
 import sql from '../config/db.config';
-import { PostInfoType, PostType, PostParamsType } from '../types/post';
+import { PostInfoType, PostType, PostParamsType } from '../types/postType';
+import ApiError from '../utils/ApiError';
 
 interface PageType {
   page?: number;
 }
 class postService {
   //* 과제 3. 게시물 생성
-  static async savePost({ title, description }: PostType) {
+  static async savePost({ userId, title, description }: PostType) {
     try {
       const [newPost] = await sql
         .promise()
-        .query('INSERT INTO posts (title, description) VALUES (?, ?)', [
-          title,
-          description,
-        ]);
+        .query(
+          'INSERT INTO posts (userId, title, description) VALUES (?, ?, ?)',
+          [userId, title, description],
+        );
       return {
         success: true,
         status: 201,
@@ -74,15 +75,24 @@ class postService {
   //* 과제 6. 특정 게시글 수정
   static async updatePost(postInfo: PostInfoType) {
     try {
-      // 입력값이 없을 경우 에러 보내기
-      // 작성자만 수정 가능
-      const [post] = await sql
+      // 작성자가 아닐경우 에러메세지
+      const findUserQuery = 'SELECT * FROM posts WHERE id = ?';
+      const [getUserInfo] = await sql
         .promise()
-        .query('UPDATE posts SET title=?, description=? WHERE id = ? ', [
-          postInfo.title,
-          postInfo.description,
-          postInfo.id,
-        ]);
+        .query(findUserQuery, [postInfo.id]);
+
+      if (postInfo.userId != getUserInfo[0].userId) {
+        const errorMessage = '작성자만 수정할 수 있습니다.';
+        return errorMessage;
+      }
+
+      const postQuery = 'UPDATE posts SET title=?, description=? WHERE id = ? ';
+      const postQueryParams = [
+        postInfo.title,
+        postInfo.description,
+        postInfo.id,
+      ];
+      const [post] = await sql.promise().query(postQuery, postQueryParams);
 
       return {
         success: true,
@@ -90,15 +100,21 @@ class postService {
         message: '게시물 수정이 완료되었습니다.',
       };
     } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
+      throw error;
     }
   }
   //* 과제 7. 특정 게시글 삭제
-  // 작성자만 삭제 가능
-  static async removePost({ id }: PostParamsType) {
+  static async removePost({ id, userId }: PostParamsType) {
     try {
+      // 작성자가 아닐경우 에러메세지
+      const findUserId = 'SELECT userId FROM posts WHERE id = ?';
+      const [getUserId] = await sql.promise().query(findUserId, [id]);
+
+      if (userId != getUserId[0].userId) {
+        const errorMessage = '작성자만 삭제할 수 있습니다.';
+        return errorMessage;
+      }
+
       const post = await sql
         .promise()
         .query('DELETE FROM posts WHERE id = ?', [id]);
@@ -109,9 +125,7 @@ class postService {
         message: '게시물이 삭제되었습니다',
       };
     } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
+      throw error;
     }
   }
 }

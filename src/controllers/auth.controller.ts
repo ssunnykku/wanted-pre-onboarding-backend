@@ -3,7 +3,7 @@ import authService from '../services/auth.service';
 import Joi from 'joi';
 
 //type
-import { RegisterType } from '../types/auth';
+import { RegisterType } from '../types/authType';
 
 const registerValidator = Joi.object({
   name: Joi.string().trim().required(),
@@ -51,10 +51,6 @@ class authController {
         email,
         password,
       });
-
-      // if (user?.errorMessage) {
-      //   throw Error(user.errorMessage);
-      // }
 
       return res.status(201).send(user);
     } catch (error) {

@@ -4,7 +4,7 @@ import sql from '../config/db.config';
 import bcrypt from 'bcrypt';
 
 //type
-import { UserType, RegisterType } from '../types/auth';
+import { UserType, RegisterType } from '../types/authType';
 
 class authService {
   //* 과제 1. 회원가입
@@ -16,7 +16,7 @@ class authService {
       const newUser = await sql
         .promise()
         .query(
-          'INSERT INTO Users (userId, email, password, name) VALUES (UUID_TO_BIN(UUID()), ?, ?, ?)',
+          'INSERT INTO Users (userId, email, password, name) VALUES (UUID(), ?, ?, ?)',
           [user.email, hashedPassword, user.name],
         );
 
@@ -27,7 +27,7 @@ class authService {
       };
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error);
+        console.error(error);
         throw error;
       }
     }
