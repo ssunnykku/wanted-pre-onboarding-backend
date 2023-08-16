@@ -88,8 +88,12 @@ class postService {
 
       const postQuery = 'UPDATE posts SET title=?, description=? WHERE id = ? ';
       const postQueryParams = [
-        postInfo.title,
-        postInfo.description,
+        postInfo.title === null || postInfo.title === ''
+          ? getUserInfo[0].title
+          : postInfo.title,
+        postInfo.description === null || postInfo.description === ''
+          ? getUserInfo[0].description
+          : postInfo.description,
         postInfo.id,
       ];
       const [post] = await sql.promise().query(postQuery, postQueryParams);

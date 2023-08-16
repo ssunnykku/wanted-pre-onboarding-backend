@@ -16,7 +16,7 @@ class authService {
       const newUser = await sql
         .promise()
         .query(
-          'INSERT INTO Users (userId, email, password, name) VALUES (UUID(), ?, ?, ?)',
+          'INSERT INTO users (userId, email, password, name) VALUES (UUID(), ?, ?, ?)',
           [user.email, hashedPassword, user.name],
         );
 

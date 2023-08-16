@@ -9,8 +9,8 @@ import { PostParamsType, PostInfoType } from '../types/postType';
 import { UserIdReqType } from '../types/loginRequiredType';
 
 const postReqValidator = Joi.object({
-  title: Joi.string().trim(),
-  description: Joi.string().trim(),
+  title: Joi.string().trim().allow(''),
+  description: Joi.string().trim().allow(''),
 });
 
 class postController {
@@ -57,9 +57,16 @@ class postController {
     try {
       const userId = req.currentUserId;
       const { id } = req.params as PostParamsType;
-      const { title, description } = await postReqValidator.validateAsync(
+      let { title, description } = await postReqValidator.validateAsync(
         req.body,
       );
+
+      if (title === undefined) {
+        title = '';
+      }
+      if (description === undefined) {
+        description = '';
+      }
 
       const postInfo: PostInfoType = {
         id,
