@@ -15,26 +15,4 @@ connection.connect((error: any) => {
   console.log('Successfully connected to the database.');
 });
 
-// connection.query(`select * from posts `, (err: any, rows: any, fields: any) => {
-//   if (err) throw err;
-//   console.log('User info is: ', rows);
-// });
-
-// connection.connect();
-
-// const createUsersTableSql =
-//   'CREATE TABLE users (userId INT NOT NULL PRIMARY KEY, name VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, createdAt datetime not null default CURRENT_TIMESTAMP,updatedAt datetime not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,)';
-// connection.query(createUsersTableSql, (err: any, result: any) => {
-//   if (err) throw err;
-//   console.log('table created');
-// });
-
-// connection.query('SELECT * FROM users', (error: any, result: any) => {
-//   if (error) return console.log(error, 'check');
-
-//   console.log(result);
-// });
-
-// connection.end();
-
 export default connection;

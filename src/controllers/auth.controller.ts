@@ -2,9 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 import authService from '../services/auth.service';
 import Joi from 'joi';
 
-//type
+// type
 import { RegisterType } from '../types/authType';
 
+// validation
 const registerValidator = Joi.object({
   name: Joi.string().trim().required(),
   email: Joi.string().trim().email().required(),

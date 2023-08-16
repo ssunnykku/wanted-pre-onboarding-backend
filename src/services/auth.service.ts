@@ -3,7 +3,7 @@ import 'dotenv/config';
 import sql from '../config/db.config';
 import bcrypt from 'bcrypt';
 
-//type
+// type
 import { UserType, RegisterType } from '../types/authType';
 
 class authService {

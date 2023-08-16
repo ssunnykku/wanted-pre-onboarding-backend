@@ -8,6 +8,7 @@ import ApiError from '../utils/ApiError';
 import { PostParamsType, PostInfoType } from '../types/postType';
 import { UserIdReqType } from '../types/loginRequiredType';
 
+// validation
 const postReqValidator = Joi.object({
   title: Joi.string().trim().allow(''),
   description: Joi.string().trim().allow(''),
