@@ -32,35 +32,49 @@ class JobPostingRepositoryTest {
    private UUID companyId;
    private UUID userId;
 
+    void createCompanyAndJobPosting(String companyName, String country, String location, String position, int compensation, String description, String technology){
+
+        Company company = createCompany(companyName,country,location);
+        JobPosting posting = createJobPosting(company,position,compensation,description,technology);
+
+    }
+
+    Company createCompany(String companyName, String country, String location) {
+        Company company = Company.builder()
+                .companyName(companyName)
+                .country(country)
+                .location(location)
+                .build();
+        companyRepository.save(company);
+        return company;
+    }
+
+    JobPosting createJobPosting(Company company,String position, int compensation, String description, String technology) {
+        JobPosting posting = JobPosting.builder()
+                .position(position)
+                .compensation(compensation)
+                .description(description)
+                .technology(technology)
+                .company(company)
+                .build();
+        jobPostingRepository.save(posting);
+        return posting;
+    }
 
     @BeforeEach
     @Transactional
     void beforeEach() {
         jobPostingRepository.deleteAll();
-        Company c1 = Company.builder().companyName("원티드").location("서울").country("한국").build();
-        companyRepository.save(c1);
+
+        Company c1 = createCompany("원티드","한국","서울");
+
 
         User user = User.builder().email("sun@gmail.com").password("1234").name("김선희").build();
         userRepository.save(user);
 
-         JobPosting posting = JobPosting.builder()
-                 .position("백엔드 주니어 개발자")
-                 .compensation(1000000)
-                 .description("원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..")
-                 .technology("Python")
-                 .company(c1)
-                 .build();
-         jobPostingRepository.save(posting);
+        JobPosting posting = createJobPosting(c1,"백엔드 주니어 개발자",1000000,"원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..","Python");
+         createJobPosting(c1,"백엔드 주니어 개발자2",1000000,"원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..","Python");
 
-        JobPosting posting2 = JobPosting.builder()
-                .position("백엔드 주니어 개발자2")
-                .compensation(1000000)
-                .description("원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("Python")
-                .company(c1)
-                .build();
-
-        jobPostingRepository.save(posting2);
 
          jobPostingId = posting.getId();
         companyId = c1.getId();
@@ -155,71 +169,10 @@ class JobPostingRepositoryTest {
     void searchPosting() {
         jobPostingRepository.deleteAll();
 
-        Company c1 = Company.builder()
-                .companyName("원티드랩")
-                .country("한국")
-                .location("서울")
-                .build();
-
-        Company c2 = Company.builder()
-                .companyName("원티드코리아")
-                .country("한국")
-                .location("부산")
-                .build();
-
-        Company c3 = Company.builder()
-                .companyName("네이버")
-                .country("한국")
-                .location("판교")
-                .build();
-
-        Company c4 = Company.builder()
-                .companyName("카카오")
-                .country("한국")
-                .location("판교")
-                .build();
-
-        companyRepository.save(c1);
-        companyRepository.save(c2);
-        companyRepository.save(c3);
-        companyRepository.save(c4);
-
-        JobPosting posting = JobPosting.builder()
-                .position("백엔드 주니어 개발자")
-                .compensation(1500000)
-                .description("백엔드 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("Python")
-                .company(c1)
-                .build();
-
-        JobPosting posting2 = JobPosting.builder()
-                .position("프론트엔드 개발자")
-                .compensation(500000)
-                .description("프론트엔드 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("javascript")
-                .company(c2)
-                .build();
-
-        JobPosting posting3 = JobPosting.builder()
-                .position("Django 백엔드 개발자")
-                .compensation(1000000)
-                .description("Django 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("Django")
-                .company(c3)
-                .build();
-
-        JobPosting posting4 = JobPosting.builder()
-                .position("Django 백엔드 개발자")
-                .compensation(500000)
-                .description("Django 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("Python")
-                .company(c4)
-                .build();
-
-        jobPostingRepository.save(posting);
-        jobPostingRepository.save(posting2);
-        jobPostingRepository.save(posting3);
-        jobPostingRepository.save(posting4);
+        createCompanyAndJobPosting("원티드랩","한국","서울","백엔드 주니어 개발자",1500000,"백엔드 주니어 개발자를 채용합니다. 자격요건은..","Python");
+        createCompanyAndJobPosting("원티드코리아","한국","부산","프론트엔드 개발자",500000,"프론트엔드 주니어 개발자를 채용합니다. 자격요건은..","javascript");
+        createCompanyAndJobPosting("네이버","한국","판교","Django 백엔드 개발자",1000000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Django");
+        createCompanyAndJobPosting("카카오","한국","판교","Django 백엔드 개발자",500000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Python");
 
         log.info("검색 결과 {} ", jobPostingRepository.search("원티드"));
         assertThat(jobPostingRepository.search("원티드").size()).isEqualTo(2);
@@ -230,72 +183,10 @@ class JobPostingRepositoryTest {
     @DisplayName("Django 검색")
     void searchPosting2() {
         jobPostingRepository.deleteAll();
-
-        Company c1 = Company.builder()
-                .companyName("원티드랩")
-                .country("한국")
-                .location("서울")
-                .build();
-
-        Company c2 = Company.builder()
-                .companyName("원티드코리아")
-                .country("한국")
-                .location("부산")
-                .build();
-
-        Company c3 = Company.builder()
-                .companyName("네이버")
-                .country("한국")
-                .location("판교")
-                .build();
-
-        Company c4 = Company.builder()
-                .companyName("카카오")
-                .country("한국")
-                .location("판교")
-                .build();
-
-        companyRepository.save(c1);
-        companyRepository.save(c2);
-        companyRepository.save(c3);
-        companyRepository.save(c4);
-
-        JobPosting posting = JobPosting.builder()
-                .position("백엔드 주니어 개발자")
-                .compensation(1500000)
-                .description("백엔드 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("Python")
-                .company(c1)
-                .build();
-
-        JobPosting posting2 = JobPosting.builder()
-                .position("프론트엔드 개발자")
-                .compensation(500000)
-                .description("프론트엔드 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("javascript")
-                .company(c2)
-                .build();
-
-        JobPosting posting3 = JobPosting.builder()
-                .position("Django 백엔드 개발자")
-                .compensation(1000000)
-                .description("Django 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("Django")
-                .company(c3)
-                .build();
-
-        JobPosting posting4 = JobPosting.builder()
-                .position("Django 백엔드 개발자")
-                .compensation(500000)
-                .description("Django 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("Python")
-                .company(c4)
-                .build();
-
-        jobPostingRepository.save(posting);
-        jobPostingRepository.save(posting2);
-        jobPostingRepository.save(posting3);
-        jobPostingRepository.save(posting4);
+        createCompanyAndJobPosting("원티드랩","한국","서울","백엔드 주니어 개발자",1500000,"백엔드 주니어 개발자를 채용합니다. 자격요건은..","Python");
+        createCompanyAndJobPosting("원티드코리아","한국","부산","프론트엔드 개발자",500000,"프론트엔드 주니어 개발자를 채용합니다. 자격요건은..","javascript");
+        createCompanyAndJobPosting("네이버","한국","판교","Django 백엔드 개발자",1000000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Django");
+        createCompanyAndJobPosting("카카오","한국","판교","Django 백엔드 개발자",500000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Python");
 
         log.info("검색 결과 {} ", jobPostingRepository.search("Django"));
         assertThat(jobPostingRepository.search("Django").size()).isEqualTo(2);
