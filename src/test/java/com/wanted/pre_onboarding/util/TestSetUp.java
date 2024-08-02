@@ -1,9 +1,14 @@
-package com.wanted.pre_onboarding.repository;
+package com.wanted.pre_onboarding.util;
 
 import com.wanted.pre_onboarding.domain.Company;
 import com.wanted.pre_onboarding.domain.JobPosting;
 import com.wanted.pre_onboarding.domain.User;
+import com.wanted.pre_onboarding.repository.CompanyRepository;
+import com.wanted.pre_onboarding.repository.JobPostingRepository;
+import com.wanted.pre_onboarding.repository.JobPostingUserRepository;
+import com.wanted.pre_onboarding.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +21,7 @@ import java.util.UUID;
 @SpringBootTest
 public class TestSetUp {
     @Autowired
-    protected JobPostingUserRepository postingUserRepository;
+    protected JobPostingUserRepository jobPostingUserRepository;
 
     @Autowired
     protected UserRepository userRepository;
@@ -27,12 +32,17 @@ public class TestSetUp {
     @Autowired
     protected CompanyRepository companyRepository;
 
+
+    @Autowired
+    private TestUtil testUtil;
+
+
     protected Long jobPostingId;
     protected UUID userId;
     protected UUID companyId;
 
     @Transactional
-    @PostConstruct
+    @BeforeEach
     public void setUp() {
         jobPostingRepository.deleteAll();
 
@@ -42,7 +52,7 @@ public class TestSetUp {
         userRepository.save(user);
 
         JobPosting posting = createJobPosting(c1, "백엔드 주니어 개발자", 1000000, "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..", "Python");
-        createJobPosting(c1, "백엔드 주니어 개발자2", 1000000, "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..", "Python");
+        JobPosting posting2 = createJobPosting(c1, "백엔드 주니어 개발자2", 1000000, "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..", "Python");
 
         jobPostingId = posting.getId();
         userId = user.getUserId();
@@ -51,27 +61,17 @@ public class TestSetUp {
     }
 
     protected Company createCompany(String companyName, String country, String location) {
-        Company company = Company.builder()
-                .companyName(companyName)
-                .country(country)
-                .location(location)
-                .build();
-        companyRepository.save(company);
-        return company;
+        return testUtil.createCompany(companyName, country, location);
     }
 
-    protected JobPosting createJobPosting(Company company, String position, int compensation, String description, String technology) {
-        JobPosting posting = JobPosting.builder()
-                .position(position)
-                .compensation(compensation)
-                .description(description)
-                .technology(technology)
-                .company(company)
-                .build();
-        jobPostingRepository.save(posting);
-        return posting;
+    protected JobPosting createJobPosting(Company company, String position, int compensation, String description, String skill) {
+        return testUtil.createJobPosting(company, position, compensation, description, skill);
     }
 
+    protected void createCompanyAndJobPosting(String companyName, String country, String location, String position, int compensation, String description, String skill){
+        testUtil.createCompanyAndJobPosting(companyName, country, location, position, compensation, description, skill);
+
+    }
 
 
 }

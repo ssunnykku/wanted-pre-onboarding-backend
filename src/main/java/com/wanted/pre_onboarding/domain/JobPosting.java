@@ -25,8 +25,8 @@ public class JobPosting {
     private int compensation;
     @Column(name = "description", nullable = false)
     private String description;
-    @Column(name = "technology", nullable = false)
-    private String technology;
+    @Column(name = "skill", nullable = false)
+    private String skill;
 
     @ManyToOne
     @ToString.Exclude
@@ -38,11 +38,12 @@ public class JobPosting {
     @ToString.Exclude
     private List<JobPostingUser> postingUser = new ArrayList<>();
 
-    public void update(String position, int compensation, String description, String technology, String country, String location) {
+    public void update(String position, int compensation, String description, String skill) {
         this.position = position;
         this.compensation = compensation;
         this.description = description;
-        this.technology = technology;
+        this.skill = skill;
+
     }
 
 }

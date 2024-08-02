@@ -1,6 +1,9 @@
 .properties
 src/main/resources/application.properties
 
+# Test configuration
+src/main/resources/application-test.properties
+
 HELP.md
 .gradle
 build/

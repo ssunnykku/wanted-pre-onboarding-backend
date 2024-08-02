@@ -35,7 +35,7 @@ public class CompanyPostingRepositoryImpl implements CompanyPostingRepository{
         return jpaQueryFactory.selectFrom(jobPosting)
                 .where(jobPosting.position.contains(keyword)
                         .or(jobPosting.description.contains(keyword))
-                        .or(jobPosting.technology.contains(keyword))
+                        .or(jobPosting.skill.contains(keyword))
                         .or(jobPosting.company.companyName.contains(keyword))
                         .or(jobPosting.company.companyName.contains(keyword))
                         .or(jobPosting.company.country.contains(keyword))

@@ -2,20 +2,20 @@ package com.wanted.pre_onboarding.repository;
 
 import com.wanted.pre_onboarding.domain.Company;
 import com.wanted.pre_onboarding.domain.JobPosting;
-import com.wanted.pre_onboarding.domain.User;
+import com.wanted.pre_onboarding.util.TestSetUp;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Slf4j
+@ActiveProfiles("test")
 class JobPostingRepositoryTest extends TestSetUp {
 
     @Test
@@ -26,10 +26,10 @@ class JobPostingRepositoryTest extends TestSetUp {
                 .position("백엔드 주니어 개발자")
                 .compensation(1000000)
                 .description("원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..")
-                .technology("Python")
+                .skill("Python")
                 .build();
         jobPostingRepository.save(posting);
-        assertThat(jobPostingRepository.findById(posting.getId())).isNotNull();
+        assertThat(jobPostingRepository.findById(posting.getId())).isPresent();
     }
 
     @Test
@@ -39,7 +39,7 @@ class JobPostingRepositoryTest extends TestSetUp {
         jobPostingRepository.findById(jobPostingId).ifPresent(jobPosting -> {
             log.info("id {} ", jobPosting.getId());
             JobPosting data = jobPostingRepository.findById(jobPostingId).get();
-            data.update("백엔드 주니어 개발자", 1500000, "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다. 자격요건은..", "Python", "한국", "서울");
+            data.update("백엔드 주니어 개발자", 1500000, "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다. 자격요건은..", "Python");
 
         });
 
@@ -59,15 +59,15 @@ class JobPostingRepositoryTest extends TestSetUp {
         getPosting.ifPresent(jobPosting -> {
             log.info("id {} ", jobPosting.getId());
             JobPosting data =  getPosting.get();
-            data.update("백엔드 주니어 개발자",1000000,"원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..","Django", "한국", "서울");
+            data.update("백엔드 주니어 개발자",1000000,"원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..","Django");
 
-            assertThat(data.getTechnology()).isEqualTo("Django");
+            assertThat(data.getSkill()).isEqualTo("Django");
         });
 
         jobPostingRepository.findById(jobPostingId).ifPresent(jobPosting -> {
             JobPosting data = jobPostingRepository.findById(jobPostingId).get();
 
-            assertThat(data.getTechnology()).isEqualTo("Django");
+            assertThat(data.getSkill()).isEqualTo("Django");
 
         });
     }
@@ -144,34 +144,5 @@ class JobPostingRepositoryTest extends TestSetUp {
         assertThat(jobPostingRepository.findAllByCompanyId(companyId).size()).isEqualTo(2);
     }
 
-
-    void createCompanyAndJobPosting(String companyName, String country, String location, String position, int compensation, String description, String technology){
-
-        Company company = createCompany(companyName,country,location);
-        JobPosting posting = createJobPosting(company,position,compensation,description,technology);
-
-    }
-
-    protected Company createCompany(String companyName, String country, String location) {
-        Company company = Company.builder()
-                .companyName(companyName)
-                .country(country)
-                .location(location)
-                .build();
-        companyRepository.save(company);
-        return company;
-    }
-
-    protected JobPosting createJobPosting(Company company,String position, int compensation, String description, String technology) {
-        JobPosting posting = JobPosting.builder()
-                .position(position)
-                .compensation(compensation)
-                .description(description)
-                .technology(technology)
-                .company(company)
-                .build();
-        jobPostingRepository.save(posting);
-        return posting;
-    }
 
 }
