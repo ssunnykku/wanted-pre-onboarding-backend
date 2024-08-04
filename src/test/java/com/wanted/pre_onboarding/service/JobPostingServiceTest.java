@@ -101,7 +101,7 @@ class JobPostingServiceTest {
                 .skill("Python")
                 .build();
 
-        jobPostingService.editJobPosting(editJobPosting);
+        jobPostingService.editJobPosting(posting.getId(), editJobPosting);
 
         List<JobPosting> editPostingList = jobPostingRepository.findAll();
 
@@ -137,7 +137,7 @@ class JobPostingServiceTest {
                 .skill("Django")
                 .build();
 
-        jobPostingService.editJobPosting(editJobPosting);
+        jobPostingService.editJobPosting(posting.getId(), editJobPosting);
 
         List<JobPosting> editPostingList = jobPostingRepository.findAll();
 

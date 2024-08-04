@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Company {
     @Id @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name="uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(name="company_id")
     private UUID id;
     @Column(name = "company_name", nullable = false)
     private String companyName;

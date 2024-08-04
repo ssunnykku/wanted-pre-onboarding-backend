@@ -35,9 +35,7 @@ public class JobPostingService {
     }
 
     /* 채용공고 수정 */
-    public void editJobPosting(JobPostingDTO jobPostingDTO){
-
-        Long jobPostingId = jobPostingDTO.getJobPostingId();
+    public void editJobPosting(Long jobPostingId, JobPostingDTO jobPostingDTO){
 
         jobPostingRepository.findById(jobPostingId).ifPresent(post -> {
             JobPosting data =  jobPostingRepository.findById(jobPostingId).get();
@@ -107,7 +105,9 @@ public class JobPostingService {
             List<Long> otherPosting = new ArrayList<>();
 
             for(JobPosting posting : getOtherPosting) {
-                otherPosting.add(posting.getId());
+                if(posting.getId() != getPosting.get().getId()) {
+                    otherPosting.add(posting.getId());
+                }
             }
 
             JobPosting post = getPosting.get();
