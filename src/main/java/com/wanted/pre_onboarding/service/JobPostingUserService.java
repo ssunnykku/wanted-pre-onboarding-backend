@@ -7,12 +7,14 @@ import com.wanted.pre_onboarding.repository.JobPostingRepository;
 import com.wanted.pre_onboarding.repository.JobPostingUserRepository;
 import com.wanted.pre_onboarding.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class JobPostingUserService {
 
     private final JobPostingUserRepository jobPostingUserRepository;
