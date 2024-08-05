@@ -7,6 +7,7 @@
 - Spring Boot
 - JPA
 - QueryDSL
+- Spring Boot Validation
 ### DataBase
   - H2 Database
   - Maria DB

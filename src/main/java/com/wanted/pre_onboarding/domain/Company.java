@@ -1,6 +1,9 @@
 package com.wanted.pre_onboarding.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,13 +25,20 @@ public class Company {
     @Column(name="company_id")
     private UUID id;
     @Column(name = "company_name", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String companyName;
     @Column(name = "location", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String location;
     @Column(name = "country", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String country;
     @OneToMany(mappedBy = "company")
     @Builder.Default
     @ToString.Exclude
+    @NotNull
     private List<JobPosting> postings = new ArrayList<>();
 }

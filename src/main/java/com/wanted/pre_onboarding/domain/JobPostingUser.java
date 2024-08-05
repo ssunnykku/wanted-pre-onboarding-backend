@@ -1,6 +1,7 @@
 package com.wanted.pre_onboarding.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -17,8 +18,10 @@ public class JobPostingUser {
     private Long postingUserId;
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
     @ManyToOne
     @JoinColumn(name = "job_posting_id")
+    @NotNull
     private JobPosting jobPosting;
 }

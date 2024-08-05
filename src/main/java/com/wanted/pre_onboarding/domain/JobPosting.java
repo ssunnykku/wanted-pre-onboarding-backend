@@ -1,6 +1,8 @@
 package com.wanted.pre_onboarding.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -20,12 +22,16 @@ public class JobPosting {
     @Column(name = "job_posting_id", nullable = false)
     private Long id;
     @Column(name = "position", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String position;
     @Column
     private int compensation;
     @Column(name = "description", nullable = false)
+    @Size(min = 2, max = 1000)
     private String description;
     @Column(name = "skill", nullable = false)
+    @Size(min = 2, max = 30)
     private String skill;
 
     @ManyToOne
