@@ -2,7 +2,7 @@
 ## 원티드 프리온보딩 백엔드 과제
 ### 지원자: 김선희
 ## SW Architecture
-![img_4.png](img_4.png)
+![img_5.png](img_5.png)
 ## 개발환경
 ### Backend
 - Java
