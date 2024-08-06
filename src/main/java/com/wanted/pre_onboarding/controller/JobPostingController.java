@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +23,12 @@ public class JobPostingController {
     private final JobPostingService jobPostingService;
     /* 채용공고 등록 */
     @PostMapping
-    public ResponseEntity<String> addJobPosting(@Valid @RequestBody JobPostingDTO jobPostingDTO){
-        jobPostingService.addJobPosting(jobPostingDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("success");
+    public ResponseEntity<Map<String, Long>> addJobPosting(@Valid @RequestBody JobPostingDTO jobPostingDTO){
+        Long jobPostingId = jobPostingService.addJobPosting(jobPostingDTO);
+        Map<String, Long> result = new HashMap<>();
+        result.put("jobPostingId", jobPostingId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
     /* 채용공고 수정 */
     @PutMapping("/{jobPostingId}")

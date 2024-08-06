@@ -19,7 +19,7 @@ public class JobPostingService {
     private final JobPostingRepository jobPostingRepository;
     private final CompanyRepository companyRepository;
     /* 채용공고 등록 */
-    public void addJobPosting(JobPostingDTO jobPostingDTO){
+    public Long addJobPosting(JobPostingDTO jobPostingDTO){
         JobPosting jobPosting = JobPosting.builder()
                 .position(jobPostingDTO.getPosition())
                 .compensation(jobPostingDTO.getCompensation())
@@ -33,6 +33,7 @@ public class JobPostingService {
         jobPosting.setCompany(company);
 
        jobPostingRepository.save(jobPosting);
+       return jobPosting.getId();
     }
 
     /* 채용공고 수정 */
@@ -44,6 +45,7 @@ public class JobPostingService {
 
             jobPostingRepository.save(data);
         });
+
     }
 
     /* 채용공고 삭제 */

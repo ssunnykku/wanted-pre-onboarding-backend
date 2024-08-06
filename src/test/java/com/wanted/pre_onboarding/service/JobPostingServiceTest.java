@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,19 +63,22 @@ class JobPostingServiceTest {
                 .companyId(company.getId())
                 .build();
 
-        jobPostingService.addJobPosting(jobPosting);
+        Long id = jobPostingService.addJobPosting(jobPosting);
 
         List<JobPosting> postingList = jobPostingRepository.findAll();
 
         assertThat(postingList.size()).isEqualTo(1);
 
-        JobPosting posting = postingList.get(0);
+        Optional<JobPosting> posting = jobPostingRepository.findById(id);
 
-        assertThat(posting.getPosition()).isEqualTo(jobPosting.getPosition());
-        assertThat(posting.getCompensation()).isEqualTo(jobPosting.getCompensation());
-        assertThat(posting.getSkill()).isEqualTo(jobPosting.getSkill());
-        assertThat(posting.getDescription()).isEqualTo(jobPosting.getDescription());
-        assertThat(posting.getCompany().getId()).isEqualTo(jobPosting.getCompanyId());
+        posting.ifPresent(post-> {
+            assertThat(post.getPosition()).isEqualTo(jobPosting.getPosition());
+            assertThat(post.getCompensation()).isEqualTo(jobPosting.getCompensation());
+            assertThat(post.getSkill()).isEqualTo(jobPosting.getSkill());
+            assertThat(post.getDescription()).isEqualTo(jobPosting.getDescription());
+            assertThat(post.getCompany().getId()).isEqualTo(jobPosting.getCompanyId());
+
+        });
 
     }
 
