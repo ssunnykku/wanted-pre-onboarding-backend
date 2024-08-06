@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -68,7 +69,7 @@ class JobPostingControllerTest {
                 .companyId(companyId)
                 .build();
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/job-postings")
+        this.mockMvc.perform(post("/job-postings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(jobPostingDTO))
                 )
@@ -77,12 +78,24 @@ class JobPostingControllerTest {
     }
 
     @Test
+    @DisplayName("채용공고 등록 validation test")
+    void addJobPosting_returnsBadRequest() throws Exception {
+        // given
+        JobPostingDTO invalidJobPostingDTO = new JobPostingDTO();
+        invalidJobPostingDTO.setPosition("");  // Invalid: empty position
+
+        // when & then
+        mockMvc.perform(MockMvcRequestBuilders.post("/job-postings")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidJobPostingDTO)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @DisplayName("채용공고 수정")
     void editJobPosting() throws Exception{
         //given
         Long jobPostingId = 1L;
-
-        UUID companyId = UUID.fromString("aa815892-d059-4efe-81b8-58dd20a34a96");
 
         JobPostingUpdateDTO editDto =
                 JobPostingUpdateDTO.builder()
@@ -106,6 +119,22 @@ class JobPostingControllerTest {
         //then
         BDDMockito.verify(jobPostingService).editJobPosting(jobPostingId, editDto);
 
+    }
+
+    @Test
+    @DisplayName("채용공고 수정 validation test")
+    void editJobPosting_returnsBadRequest() throws Exception {
+        // given
+        Long jobPostingId = 1L;
+
+        JobPostingDTO invalidJobPostingDTO = new JobPostingDTO();
+        invalidJobPostingDTO.setPosition("");
+
+        // when & then
+        mockMvc.perform(MockMvcRequestBuilders.put("/job-postings/{jobPostingId}", jobPostingId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidJobPostingDTO)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
