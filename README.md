@@ -17,6 +17,7 @@
 ### DevOps
   - AWS EC2
   - AWS RDS
+  - NginX
 
 ## 개발 상세 내용
 ### 채용을 위한 웹 서비스
@@ -29,6 +30,18 @@
 5. 채용 상세 페이지
 6. 채용공고에 지원(선택사항)
 ## 데이터 모델링 (ERD)
-![img_1.png](img_1.png)
+
 ## Postman API 문서
       https://documenter.getpostman.com/view/22410713/2sA3rxpYR2
+
+## 후기
+이전 프로젝트를 보완하고 싶었다.
+### 테스트 코드
+테스트 커버리지,
+
+### validation
+domain, dto에서 validation
+수정시 dto를 다르게 사용
+
+### 배포
+Nginx를 이용, 무중단 배포 환경 구성
