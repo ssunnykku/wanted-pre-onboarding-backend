@@ -3,6 +3,7 @@ package com.wanted.pre_onboarding.service;
 import com.wanted.pre_onboarding.domain.Company;
 import com.wanted.pre_onboarding.domain.JobPosting;
 import com.wanted.pre_onboarding.dto.JobPostingDTO;
+import com.wanted.pre_onboarding.dto.JobPostingUpdateDTO;
 import com.wanted.pre_onboarding.repository.CompanyRepository;
 import com.wanted.pre_onboarding.repository.JobPostingRepository;
 import com.wanted.pre_onboarding.util.TestUtil;
@@ -92,7 +93,7 @@ class JobPostingServiceTest {
         JobPosting posting = postingList.get(0);
 
         log.info("{}",posting);
-        JobPostingDTO editJobPosting = JobPostingDTO.builder()
+        JobPostingUpdateDTO editJobPosting = JobPostingUpdateDTO.builder()
                 .jobPostingId(posting.getId())
                 .position("백엔드 주니어 개발자")
                 .compensation(1500000)
@@ -128,7 +129,7 @@ class JobPostingServiceTest {
         JobPosting posting = postingList.get(0);
 
         log.info("{}",posting);
-        JobPostingDTO editJobPosting = JobPostingDTO.builder()
+        JobPostingUpdateDTO editJobPosting = JobPostingUpdateDTO.builder()
                 .jobPostingId(posting.getId())
                 .position("백엔드 주니어 개발자")
                 .compensation(1500000)

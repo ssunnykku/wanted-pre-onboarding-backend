@@ -9,31 +9,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
-import java.util.List;
-import java.util.UUID;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobPostingDTO {
-    private Long jobPostingId;
+public class JobPostingUpdateDTO {
     @NotNull
-    private UUID companyId;
-    private String companyName;
-    private String country;
-    private String location;
+    private Long jobPostingId;
     @NotBlank
     @Size(max = 50)
     private String position;
     @NotNull
-    @Range(min = 100000, max = 1000000)
+    @Range(min = 100000, max = 2000000)
     private int compensation;
     @NotBlank
     @Size(max = 30)
     private String skill;
     @Size(max = 1000)
     private String description;
-    private List<Long> jobPostingIdList;
 
 }

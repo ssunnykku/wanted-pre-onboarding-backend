@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanted.pre_onboarding.domain.Company;
 import com.wanted.pre_onboarding.dto.JobPostingDTO;
+import com.wanted.pre_onboarding.dto.JobPostingUpdateDTO;
 import com.wanted.pre_onboarding.service.JobPostingService;
 import com.wanted.pre_onboarding.util.TestUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +72,7 @@ class JobPostingControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(jobPostingDTO))
                 )
-                .andExpect(status().isCreated())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(print());
     }
 
@@ -83,14 +84,13 @@ class JobPostingControllerTest {
 
         UUID companyId = UUID.fromString("aa815892-d059-4efe-81b8-58dd20a34a96");
 
-        JobPostingDTO editDto =
-                JobPostingDTO.builder()
+        JobPostingUpdateDTO editDto =
+                JobPostingUpdateDTO.builder()
                         .jobPostingId(jobPostingId)
                         .position("백엔드 주니어 개발자")
                         .compensation(1500000)
                         .description("원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..")
                         .skill("Python")
-                        .companyId(companyId)
                         .build();
 
         // stub
@@ -98,8 +98,9 @@ class JobPostingControllerTest {
 
         //when
         mockMvc.perform(MockMvcRequestBuilders.put("/job-postings/{jobPostingId}", jobPostingId)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(editDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+                )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print());
         //then

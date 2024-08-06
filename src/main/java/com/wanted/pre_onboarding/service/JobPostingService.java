@@ -3,6 +3,7 @@ package com.wanted.pre_onboarding.service;
 import com.wanted.pre_onboarding.domain.Company;
 import com.wanted.pre_onboarding.domain.JobPosting;
 import com.wanted.pre_onboarding.dto.JobPostingDTO;
+import com.wanted.pre_onboarding.dto.JobPostingUpdateDTO;
 import com.wanted.pre_onboarding.repository.CompanyRepository;
 import com.wanted.pre_onboarding.repository.JobPostingRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,11 +36,11 @@ public class JobPostingService {
     }
 
     /* 채용공고 수정 */
-    public void editJobPosting(Long jobPostingId, JobPostingDTO jobPostingDTO){
+    public void editJobPosting(Long jobPostingId, JobPostingUpdateDTO jobPostingUpdateDTO){
 
         jobPostingRepository.findById(jobPostingId).ifPresent(post -> {
             JobPosting data =  jobPostingRepository.findById(jobPostingId).get();
-            data.update(jobPostingDTO.getPosition(), jobPostingDTO.getCompensation(), jobPostingDTO.getDescription(), jobPostingDTO.getSkill());
+            data.update(jobPostingUpdateDTO.getPosition(), jobPostingUpdateDTO.getCompensation(), jobPostingUpdateDTO.getDescription(), jobPostingUpdateDTO.getSkill());
 
             jobPostingRepository.save(data);
         });

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class JobPosting {
     @Size(max = 50)
     private String position;
     @Column
+    @Range(min = 100000, max = 2000000)
     private int compensation;
     @Column(name = "description", nullable = false)
     @Size(max = 1000)

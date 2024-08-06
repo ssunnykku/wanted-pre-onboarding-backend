@@ -1,6 +1,7 @@
 package com.wanted.pre_onboarding.controller;
 
 import com.wanted.pre_onboarding.dto.JobPostingDTO;
+import com.wanted.pre_onboarding.dto.JobPostingUpdateDTO;
 import com.wanted.pre_onboarding.service.JobPostingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class JobPostingController {
     }
     /* 채용공고 수정 */
     @PutMapping("/{jobPostingId}")
-    public ResponseEntity<String> editJobPosting(@PathVariable Long jobPostingId, @Valid @RequestBody JobPostingDTO jobPostingDTO) {
-        jobPostingService.editJobPosting(jobPostingId, jobPostingDTO);
+    public ResponseEntity<String> editJobPosting(@PathVariable Long jobPostingId, @Valid @RequestBody JobPostingUpdateDTO jobPostingUpdateDTO) {
+        jobPostingService.editJobPosting(jobPostingId, jobPostingUpdateDTO);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
     /* 채용공고 삭제 */
