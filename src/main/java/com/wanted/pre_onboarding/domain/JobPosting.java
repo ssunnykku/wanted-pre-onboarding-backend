@@ -23,15 +23,15 @@ public class JobPosting {
     private Long id;
     @Column(name = "position", nullable = false)
     @NotBlank
-    @Size(min = 2, max = 50)
+    @Size(max = 50)
     private String position;
     @Column
     private int compensation;
     @Column(name = "description", nullable = false)
-    @Size(min = 2, max = 1000)
+    @Size(max = 1000)
     private String description;
     @Column(name = "skill", nullable = false)
-    @Size(min = 2, max = 30)
+    @Size(max = 30)
     private String skill;
 
     @ManyToOne

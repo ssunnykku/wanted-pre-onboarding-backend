@@ -1,5 +1,6 @@
 package com.wanted.pre_onboarding.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class JobPostingUserDTO {
     private Long jobPostingUserId;
+    @NotNull
     private UUID userId;
+    @NotNull
     private Long jobPostingId;
 }

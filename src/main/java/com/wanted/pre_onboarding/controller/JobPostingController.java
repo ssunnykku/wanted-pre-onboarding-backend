@@ -2,6 +2,7 @@ package com.wanted.pre_onboarding.controller;
 
 import com.wanted.pre_onboarding.dto.JobPostingDTO;
 import com.wanted.pre_onboarding.service.JobPostingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,13 @@ public class JobPostingController {
     private final JobPostingService jobPostingService;
     /* 채용공고 등록 */
     @PostMapping
-    public ResponseEntity<String> addJobPosting(@RequestBody JobPostingDTO jobPostingDTO){
+    public ResponseEntity<String> addJobPosting(@Valid @RequestBody JobPostingDTO jobPostingDTO){
         jobPostingService.addJobPosting(jobPostingDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
     /* 채용공고 수정 */
     @PutMapping("/{jobPostingId}")
-    public ResponseEntity<String> editJobPosting(@PathVariable Long jobPostingId, @RequestBody JobPostingDTO jobPostingDTO) {
+    public ResponseEntity<String> editJobPosting(@PathVariable Long jobPostingId, @Valid @RequestBody JobPostingDTO jobPostingDTO) {
         jobPostingService.editJobPosting(jobPostingId, jobPostingDTO);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }

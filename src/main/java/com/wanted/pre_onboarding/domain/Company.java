@@ -26,15 +26,15 @@ public class Company {
     private UUID id;
     @Column(name = "company_name", nullable = false)
     @NotBlank
-    @Size(min = 2, max = 50)
+    @Size(max = 50)
     private String companyName;
     @Column(name = "location", nullable = false)
     @NotBlank
-    @Size(min = 2, max = 50)
+    @Size(max = 50)
     private String location;
     @Column(name = "country", nullable = false)
     @NotBlank
-    @Size(min = 2, max = 50)
+    @Size(max = 50)
     private String country;
     @OneToMany(mappedBy = "company")
     @Builder.Default

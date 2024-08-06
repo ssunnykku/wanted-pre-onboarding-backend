@@ -28,7 +28,7 @@
    - 채용공고 검색 기능 구현(선택사항)
 5. 채용 상세 페이지
 6. 채용공고에 지원(선택사항)
-## 데이터 모델링 ERD
+## 데이터 모델링 (ERD)
 ![img_1.png](img_1.png)
 ## Postman API 문서
       https://documenter.getpostman.com/view/22410713/2sA3rxpYR2
