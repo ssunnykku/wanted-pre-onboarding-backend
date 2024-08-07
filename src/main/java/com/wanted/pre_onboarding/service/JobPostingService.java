@@ -20,20 +20,22 @@ public class JobPostingService {
     private final CompanyRepository companyRepository;
     /* 채용공고 등록 */
     public Long addJobPosting(JobPostingDTO jobPostingDTO){
-        JobPosting jobPosting = JobPosting.builder()
-                .position(jobPostingDTO.getPosition())
-                .compensation(jobPostingDTO.getCompensation())
-                .description(jobPostingDTO.getDescription())
-                .skill(jobPostingDTO.getSkill())
-                .build();
+           JobPosting jobPosting = JobPosting.builder()
+                   .position(jobPostingDTO.getPosition())
+                   .compensation(jobPostingDTO.getCompensation())
+                   .description(jobPostingDTO.getDescription())
+                   .skill(jobPostingDTO.getSkill())
+                   .build();
 
-        Company company = companyRepository.findById(jobPostingDTO.getCompanyId())
-                .orElseThrow(() -> new RuntimeException("Company not found"));
+           Company company = companyRepository.findById(jobPostingDTO.getCompanyId())
+                   .orElseThrow(() -> new RuntimeException("Company not found"));
 
-        jobPosting.setCompany(company);
+           jobPosting.setCompany(company);
 
-       jobPostingRepository.save(jobPosting);
-       return jobPosting.getId();
+           jobPostingRepository.save(jobPosting);
+
+           return jobPosting.getId();
+
     }
 
     /* 채용공고 수정 */

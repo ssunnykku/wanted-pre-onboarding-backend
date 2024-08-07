@@ -2,6 +2,7 @@ package com.wanted.pre_onboarding.controller;
 
 import com.wanted.pre_onboarding.dto.JobPostingDTO;
 import com.wanted.pre_onboarding.dto.JobPostingUpdateDTO;
+import com.wanted.pre_onboarding.exception.ErrorResult;
 import com.wanted.pre_onboarding.service.JobPostingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,13 @@ import java.util.Map;
 @Slf4j
 public class JobPostingController {
     private final JobPostingService jobPostingService;
+
     /* 채용공고 등록 */
     @PostMapping
     public ResponseEntity<Map<String, Long>> addJobPosting(@Valid @RequestBody JobPostingDTO jobPostingDTO){
-        Long jobPostingId = jobPostingService.addJobPosting(jobPostingDTO);
+            Long jobPostingId = jobPostingService.addJobPosting(jobPostingDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("jobPostingId", jobPostingId));
+            return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("jobPostingId", jobPostingId));
     }
     /* 채용공고 수정 */
     @PutMapping("/{jobPostingId}")
