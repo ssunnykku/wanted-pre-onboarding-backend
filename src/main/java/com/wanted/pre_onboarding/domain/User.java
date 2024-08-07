@@ -16,7 +16,11 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@Table(name="Users")
+@Table(name="users", uniqueConstraints = {
+        @UniqueConstraint(
+                name="USER_EMAIL_UNIQUE",
+                columnNames={"email"}
+        )})
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
