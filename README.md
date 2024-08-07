@@ -56,4 +56,4 @@ https://documenter.getpostman.com/view/22410713/2sA3rxpYR2
 - domain, dto에서 각각 validation 진행하여 데이터 무결성 강화
 
 ### exception
-- exception 처리 및 test 코드 작성은 현재 보완중입니다! 감사합니다!
+- @RestControllerAdvice를 활용한 전역 예외처리

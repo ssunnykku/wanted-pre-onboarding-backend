@@ -19,14 +19,7 @@ public class ControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorResult illegalHandle(IllegalArgumentException e) {
         log.error("[exceptionHandle] ", e);
-        return new ErrorResult("400", e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(BadRequestException.class)
-    public ErrorResult badRequestHandle(BadRequestException e) {
-        log.error("[exceptionHandle] ", e);
-        return new ErrorResult("400", e.getMessage());
+        return new ErrorResult("BAD_REQUEST", e.getMessage());
     }
 
 
@@ -34,7 +27,7 @@ public class ControllerAdvice {
     @ExceptionHandler
     public ErrorResult serverErrorHandle(HttpServerErrorException.InternalServerError e) {
         log.error("[exceptionHandle] ", e);
-        return new ErrorResult("500", "내부 오류"); }
+        return new ErrorResult("INTERNAL_SERVER_ERROR", "서버 내부 오류"); }
 
 
 }
