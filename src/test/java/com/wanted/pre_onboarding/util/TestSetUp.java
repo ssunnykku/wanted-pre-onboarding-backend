@@ -44,6 +44,10 @@ public class TestSetUp {
 
     @BeforeEach
     public void setUp() {
+        jobPostingUserRepository.deleteAll();
+        jobPostingRepository.deleteAll();
+        companyRepository.deleteAll();
+        userRepository.deleteAll();
 
         Company c1 = createCompany("원티드랩", "한국", "서울");
 

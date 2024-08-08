@@ -99,7 +99,6 @@ class JobPostingControllerTest {
 
         JobPostingUpdateDTO editDto =
                 JobPostingUpdateDTO.builder()
-                        .jobPostingId(jobPostingId)
                         .position("백엔드 주니어 개발자")
                         .compensation(1500000)
                         .description("원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..")

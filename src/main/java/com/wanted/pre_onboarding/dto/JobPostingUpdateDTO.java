@@ -14,8 +14,6 @@ import org.hibernate.validator.constraints.Range;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobPostingUpdateDTO {
-    @NotNull
-    private Long jobPostingId;
     @NotBlank
     @Size(max = 50)
     private String position;
