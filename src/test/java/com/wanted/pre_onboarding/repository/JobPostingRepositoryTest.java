@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 @ActiveProfiles("test")
 class JobPostingRepositoryTest extends TestSetUp {
-
     @Test
     @Transactional
     @DisplayName("채용공고 등록")
@@ -72,7 +71,7 @@ class JobPostingRepositoryTest extends TestSetUp {
         });
     }
 
-    @Test
+  @Test
     @Transactional
     @DisplayName("채용공고 삭제")
     void deletePosting() {
@@ -87,7 +86,7 @@ class JobPostingRepositoryTest extends TestSetUp {
     @DisplayName("채용공고 목록")
     void getPostingList(){
         log.info("목록 {}", jobPostingRepository.findAllWithCompany());
-        assertThat(jobPostingRepository.findAllWithCompany().size()).isEqualTo(2);
+        assertThat(jobPostingRepository.findAllWithCompany().size()).isEqualTo(4);
     }
 
     @Test
@@ -104,12 +103,6 @@ class JobPostingRepositoryTest extends TestSetUp {
     @Transactional
     @DisplayName("원티드 검색")
     void searchPosting() {
-        jobPostingRepository.deleteAll();
-
-        createCompanyAndJobPosting("원티드랩","한국","서울","백엔드 주니어 개발자",1500000,"백엔드 주니어 개발자를 채용합니다. 자격요건은..","Python");
-        createCompanyAndJobPosting("원티드코리아","한국","부산","프론트엔드 개발자",500000,"프론트엔드 주니어 개발자를 채용합니다. 자격요건은..","javascript");
-        createCompanyAndJobPosting("네이버","한국","판교","Django 백엔드 개발자",1000000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Django");
-        createCompanyAndJobPosting("카카오","한국","판교","Django 백엔드 개발자",500000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Python");
 
         log.info("검색 결과 {} ", jobPostingRepository.search("원티드"));
         assertThat(jobPostingRepository.search("원티드").size()).isEqualTo(2);
@@ -119,11 +112,6 @@ class JobPostingRepositoryTest extends TestSetUp {
     @Transactional
     @DisplayName("Django 검색")
     void searchPosting2() {
-        jobPostingRepository.deleteAll();
-        createCompanyAndJobPosting("원티드랩","한국","서울","백엔드 주니어 개발자",1500000,"백엔드 주니어 개발자를 채용합니다. 자격요건은..","Python");
-        createCompanyAndJobPosting("원티드코리아","한국","부산","프론트엔드 개발자",500000,"프론트엔드 주니어 개발자를 채용합니다. 자격요건은..","javascript");
-        createCompanyAndJobPosting("네이버","한국","판교","Django 백엔드 개발자",1000000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Django");
-        createCompanyAndJobPosting("카카오","한국","판교","Django 백엔드 개발자",500000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Python");
 
         log.info("검색 결과 {} ", jobPostingRepository.search("Django"));
         assertThat(jobPostingRepository.search("Django").size()).isEqualTo(2);
@@ -141,7 +129,7 @@ class JobPostingRepositoryTest extends TestSetUp {
 
         log.info("결과는? {} ", jobPostingRepository.findAllByCompanyId(companyId));
 
-        assertThat(jobPostingRepository.findAllByCompanyId(companyId).size()).isEqualTo(2);
+        assertThat(jobPostingRepository.findAllByCompanyId(companyId).size()).isEqualTo(1);
     }
 
 

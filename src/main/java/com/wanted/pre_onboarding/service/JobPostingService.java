@@ -8,6 +8,7 @@ import com.wanted.pre_onboarding.repository.CompanyRepository;
 import com.wanted.pre_onboarding.repository.JobPostingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,21 +21,26 @@ public class JobPostingService {
     private final CompanyRepository companyRepository;
     /* 채용공고 등록 */
     public Long addJobPosting(JobPostingDTO jobPostingDTO){
-           JobPosting jobPosting = JobPosting.builder()
-                   .position(jobPostingDTO.getPosition())
-                   .compensation(jobPostingDTO.getCompensation())
-                   .description(jobPostingDTO.getDescription())
-                   .skill(jobPostingDTO.getSkill())
-                   .build();
 
-           Company company = companyRepository.findById(jobPostingDTO.getCompanyId())
-                   .orElseThrow(() -> new RuntimeException("Company not found"));
+            if (jobPostingDTO.getPosition() == null || jobPostingDTO.getPosition() == "" ||
+                    jobPostingDTO.getSkill() == null || jobPostingDTO.getSkill() == "") {
+                throw new IllegalArgumentException("required input value");
+            }
 
-           jobPosting.setCompany(company);
+            Company company = companyRepository.findById(jobPostingDTO.getCompanyId())
+                    .orElseThrow(() -> new RuntimeException("Company not found with id: " + jobPostingDTO.getCompanyId()));
 
-           jobPostingRepository.save(jobPosting);
+            JobPosting jobPosting = JobPosting.builder()
+                    .position(jobPostingDTO.getPosition())
+                    .compensation(jobPostingDTO.getCompensation())
+                    .description(jobPostingDTO.getDescription())
+                    .skill(jobPostingDTO.getSkill())
+                    .company(company)
+                    .build();
 
-           return jobPosting.getId();
+            jobPostingRepository.save(jobPosting);
+
+            return jobPosting.getId();
 
     }
 

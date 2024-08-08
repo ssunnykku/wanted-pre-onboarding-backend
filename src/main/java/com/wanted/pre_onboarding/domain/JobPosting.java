@@ -29,11 +29,14 @@ public class JobPosting {
     @Column
     @Range(min = 100000, max = 2000000)
     private int compensation;
+
     @Column(name = "description", nullable = false)
     @Size(max = 1000)
     private String description;
+
     @Column(name = "skill", nullable = false)
     @Size(max = 30)
+    @NotBlank
     private String skill;
 
     @ManyToOne

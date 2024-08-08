@@ -6,8 +6,10 @@ import com.wanted.pre_onboarding.dto.JobPostingDTO;
 import com.wanted.pre_onboarding.dto.JobPostingUpdateDTO;
 import com.wanted.pre_onboarding.repository.CompanyRepository;
 import com.wanted.pre_onboarding.repository.JobPostingRepository;
+import com.wanted.pre_onboarding.repository.UserRepository;
 import com.wanted.pre_onboarding.util.TestUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,16 +32,19 @@ class JobPostingServiceTest {
     @Autowired
     CompanyRepository companyRepository;
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     JobPostingRepository jobPostingRepository;
 
     @Autowired
     TestUtil testUtil;
 
     @BeforeEach
-    @Transactional
     void setUpDB() {
         jobPostingRepository.deleteAll();
-
+        companyRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test

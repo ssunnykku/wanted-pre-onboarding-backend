@@ -18,18 +18,17 @@ import java.util.UUID;
 @NoArgsConstructor
 public class JobPostingDTO {
     private Long jobPostingId;
-    @NotNull
+    @NotNull(message = "Company ID is required")
     private UUID companyId;
     private String companyName;
     private String country;
     private String location;
-    @NotBlank
+    @NotBlank(message = "Position is required")
     @Size(max = 50)
     private String position;
-    @NotNull
-    @Range(min = 100000, max = 1000000)
+    @Range(min = 100000, max = 2000000)
     private int compensation;
-    @NotBlank
+    @NotBlank(message = "Skill is required")
     @Size(max = 30)
     private String skill;
     @Size(max = 1000)

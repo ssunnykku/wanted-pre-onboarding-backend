@@ -26,7 +26,7 @@ public class JobPostingController {
 
     /* 채용공고 등록 */
     @PostMapping
-    public ResponseEntity<Map<String, Long>> addJobPosting(@Valid @RequestBody JobPostingDTO jobPostingDTO){
+    public ResponseEntity<Map<String, Long>> addJobPosting(@Valid @RequestBody JobPostingDTO jobPostingDTO) {
             Long jobPostingId = jobPostingService.addJobPosting(jobPostingDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("jobPostingId", jobPostingId));

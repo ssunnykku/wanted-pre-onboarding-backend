@@ -8,6 +8,7 @@ import com.wanted.pre_onboarding.repository.JobPostingRepository;
 import com.wanted.pre_onboarding.repository.JobPostingUserRepository;
 import com.wanted.pre_onboarding.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,23 +42,32 @@ public class TestSetUp {
     protected UUID userId;
     protected UUID companyId;
 
-    @Transactional
     @BeforeEach
     public void setUp() {
-        jobPostingRepository.deleteAll();
 
-        Company c1 = createCompany("원티드", "한국", "서울");
+        Company c1 = createCompany("원티드랩", "한국", "서울");
 
         User user = User.builder().email("sun@gmail.com").password("1234").name("김선희").build();
         userRepository.save(user);
 
         JobPosting posting = createJobPosting(c1, "백엔드 주니어 개발자", 1000000, "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..", "Python");
-        JobPosting posting2 = createJobPosting(c1, "백엔드 주니어 개발자2", 1000000, "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..", "Python");
+
+        createCompanyAndJobPosting("원티드코리아","한국","부산","프론트엔드 개발자",500000,"프론트엔드 주니어 개발자를 채용합니다. 자격요건은..","javascript");
+        createCompanyAndJobPosting("네이버","한국","판교","Django 백엔드 개발자",1000000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Django");
+        createCompanyAndJobPosting("카카오","한국","판교","Django 백엔드 개발자",500000,"Django 주니어 개발자를 채용합니다. 자격요건은..","Python");
 
         jobPostingId = posting.getId();
         userId = user.getUserId();
         companyId = c1.getId();
 
+    }
+
+    @AfterEach
+    public void afterEach() {
+        jobPostingUserRepository.deleteAll();
+        jobPostingRepository.deleteAll();
+        companyRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     protected Company createCompany(String companyName, String country, String location) {
