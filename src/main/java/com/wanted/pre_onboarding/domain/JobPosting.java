@@ -22,6 +22,7 @@ public class JobPosting {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "job_posting_id", nullable = false)
     private Long id;
+
     @Column(name = "position", nullable = false)
     @NotBlank
     @Size(max = 50)
