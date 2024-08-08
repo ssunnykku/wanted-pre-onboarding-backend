@@ -50,10 +50,14 @@ https://documenter.getpostman.com/view/22410713/2sA3rxpYR2
 - Assertj를 사용, 자체 검증 가능한 테스트 구현
 - 다른 메서드에 의존하지 않는 단위테스트 작성
 - controller, dto, repository, service의 테스트 커버리지 100% 달성
-![img_2.png](images/img_2.png)
-
+  (exception test code - 추가 보완 진행중입니다.)
+![img.png](images/testCoverage.png)
 ### validation
 - domain, dto에서 각각 validation 진행하여 데이터 무결성 강화
 
 ### exception
 - @RestControllerAdvice를 활용한 전역 예외처리
+
+### 느낀점
+- 코드를 수정할 때마다 수동으로 빌드와 배포를 반복해야 했던 과정이 불편했습니다. 배포 자동화의 필요성을 느꼈습니다. 추후 배포 자동화를 학습/적용해 코드 변경 시 자동으로 빌드하고 배포할 수 있도록 하여 개발 효율성을 높이고자 합니다.
+- 테스트의 중요성과 TDD(테스트 주도 개발)의 필요성에 대해 고민해보았습니다. 비록 이번 프로젝트에서 TDD를 완전히 적용하지는 못했지만,  각 레이어를 작성할 때마다 테스트 코드를 작성하는 습관을 들였습니다. 이 덕분에 코드의 신뢰성을 높일 수 있었고, 버그를 조기에 발견할 수 있었습니다. 다음 프로젝트에서는 TDD를 적극적으로 적용하여 테스트 주도의 개발 프로세스를 도입해 보고자 합니다.
