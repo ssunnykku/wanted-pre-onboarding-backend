@@ -2,7 +2,7 @@
 ## 원티드 프리온보딩 백엔드 과제
 ### 지원자: 김선희
 ## SW Architecture
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 ## 개발환경
 ### Backend
 - Java
@@ -32,7 +32,7 @@
 5. 채용 상세 페이지
 6. 채용공고에 지원(선택사항)
 ## 데이터 모델링 (ERD)
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 ## API 명세서(Postman)
 https://documenter.getpostman.com/view/22410713/2sA3rxpYR2
 
@@ -50,7 +50,7 @@ https://documenter.getpostman.com/view/22410713/2sA3rxpYR2
 - Assertj를 사용, 자체 검증 가능한 테스트 구현
 - 다른 메서드에 의존하지 않는 단위테스트 작성
 - controller, dto, repository, service의 테스트 커버리지 100% 달성
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 ### validation
 - domain, dto에서 각각 validation 진행하여 데이터 무결성 강화
