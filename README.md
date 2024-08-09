@@ -32,7 +32,7 @@
 5. 채용 상세 페이지
 6. 채용공고에 지원(선택사항)
 ## 데이터 모델링 (ERD)
-![img_4.png](images/img_4.png)
+![img.png](images/erd.png)!
 ## API 명세서(Postman)
 https://documenter.getpostman.com/view/22410713/2sA3rxpYR2
 
