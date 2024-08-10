@@ -16,10 +16,12 @@ public class JobPostingUser {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "posting_user_id", nullable = false)
     private Long postingUserId;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "job_posting_id")
     @NotNull

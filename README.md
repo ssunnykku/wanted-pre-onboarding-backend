@@ -50,7 +50,6 @@ https://documenter.getpostman.com/view/22410713/2sA3rxpYR2
 - Assertj를 사용, 자체 검증 가능한 테스트 구현
 - 다른 메서드에 의존하지 않는 단위테스트 작성
 - controller, dto, repository, service의 테스트 커버리지 100% 달성
-  (exception test code - 추가 보완 진행중입니다.)
 ![img.png](images/testCoverage.png)
 ### validation
 - domain, dto에서 각각 validation 진행하여 데이터 무결성 강화

@@ -28,12 +28,14 @@ public class User {
     @GenericGenerator(name="uuid2", strategy = "uuid2")
     @Column
     private UUID userId;
+
     @Column(name = "email", nullable = false)
     @Email
     private String email;
     @Column(name = "password", nullable = false)
     @NotBlank
     private String password;
+
     @Column(name = "name", nullable = false)
     @NotBlank
     @Size(min = 2, max = 50)

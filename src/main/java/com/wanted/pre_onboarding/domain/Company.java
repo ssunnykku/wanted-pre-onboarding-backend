@@ -28,18 +28,22 @@ public class Company {
     @GenericGenerator(name="uuid2", strategy = "uuid2")
     @Column(name="company_id")
     private UUID id;
+
     @Column(name = "company_name", nullable = false)
     @NotBlank
     @Size(max = 50)
     private String companyName;
+
     @Column(name = "location", nullable = false)
     @NotBlank
     @Size(max = 50)
     private String location;
+
     @Column(name = "country", nullable = false)
     @NotBlank
     @Size(max = 50)
     private String country;
+
     @OneToMany(mappedBy = "company")
     @Builder.Default
     @ToString.Exclude
