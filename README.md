@@ -1,4 +1,4 @@
-<img width="719" alt="image" src="https://github.com/user-attachments/assets/f69d9bee-52df-443a-a8a6-2c60e0ad283c"># wanted-pre-onboarding-backend
+# wanted-pre-onboarding-backend
 ## 원티드 프리온보딩 백엔드 과제
 ### 지원자: 김선희
 ## SW Architecture
