@@ -3,6 +3,7 @@ package com.wanted.pre_onboarding.service;
 import com.wanted.pre_onboarding.repository.JobPostingUserRepository;
 import com.wanted.pre_onboarding.util.TestSetUp;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,8 @@ class JobPostingUserServiceTest extends TestSetUp {
     JobPostingUserService jobPostingUserService;
     @Autowired
     JobPostingUserRepository jobPostingUserRepository;
-    @BeforeEach
-    public void beforEach() {
+    @AfterEach
+    public void afterEach() {
         jobPostingUserRepository.deleteAll();
     }
 

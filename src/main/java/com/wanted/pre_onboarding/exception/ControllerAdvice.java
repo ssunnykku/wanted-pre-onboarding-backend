@@ -1,5 +1,6 @@
 package com.wanted.pre_onboarding.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -43,4 +44,12 @@ public class ControllerAdvice {
         }
         return new ErrorResult("VALIDATION_ERROR", errorMessage.toString());
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ErrorResult handleEntityNotFoundException(EntityNotFoundException e){
+        log.error("[exceptionHandle] ", e);
+        return new ErrorResult("NOT_FOUND", e.getMessage());
+    }
+
 }

@@ -6,6 +6,7 @@ import com.wanted.pre_onboarding.dto.JobPostingDTO;
 import com.wanted.pre_onboarding.dto.JobPostingUpdateDTO;
 import com.wanted.pre_onboarding.repository.CompanyRepository;
 import com.wanted.pre_onboarding.repository.JobPostingRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,7 +29,7 @@ public class JobPostingService {
             }
 
             Company company = companyRepository.findById(jobPostingDTO.getCompanyId())
-                    .orElseThrow(() -> new RuntimeException("Company not found with id: " + jobPostingDTO.getCompanyId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Company not found with id: " + jobPostingDTO.getCompanyId()));
 
             JobPosting jobPosting = JobPosting.builder()
                     .position(jobPostingDTO.getPosition())
@@ -47,12 +48,15 @@ public class JobPostingService {
     /* 채용공고 수정 */
     public void editJobPosting(Long jobPostingId, JobPostingUpdateDTO jobPostingUpdateDTO){
 
-        jobPostingRepository.findById(jobPostingId).ifPresent(post -> {
-            JobPosting data =  jobPostingRepository.findById(jobPostingId).get();
-            data.update(jobPostingUpdateDTO.getPosition(), jobPostingUpdateDTO.getCompensation(), jobPostingUpdateDTO.getDescription(), jobPostingUpdateDTO.getSkill());
+        JobPosting jobPosting = jobPostingRepository.findById(jobPostingId)
+                .orElseThrow(() -> new EntityNotFoundException("Job posting not found with id " + jobPostingId));
 
-            jobPostingRepository.save(data);
-        });
+        jobPosting.update(jobPostingUpdateDTO.getPosition(),
+                jobPostingUpdateDTO.getCompensation(),
+                jobPostingUpdateDTO.getDescription(),
+                jobPostingUpdateDTO.getSkill());
+
+        jobPostingRepository.save(jobPosting);
 
     }
 
@@ -107,34 +111,34 @@ public class JobPostingService {
     /* 채용공고 상세 페이지 */
     public JobPostingDTO getJobPostingDetails(Long jobPostingId){
 
-        Optional<JobPosting> getPosting = jobPostingRepository.findById(jobPostingId);
+        JobPosting getPosting = jobPostingRepository.findById(jobPostingId)
+                .orElseThrow(() -> new EntityNotFoundException("Job posting not found with id " + jobPostingId));;
 
         JobPostingDTO result = null;
 
-        if(getPosting.isPresent()) {
-            List<JobPosting> getOtherPosting = jobPostingRepository.findAllByCompanyId(getPosting.get().getCompany().getId());
+
+            List<JobPosting> getOtherPosting = jobPostingRepository.findAllByCompanyId(getPosting.getCompany().getId());
             List<Long> otherPosting = new ArrayList<>();
 
             for(JobPosting posting : getOtherPosting) {
-                if(posting.getId() != getPosting.get().getId()) {
+                if(posting.getId() != getPosting.getId()) {
                     otherPosting.add(posting.getId());
                 }
             }
 
-            JobPosting post = getPosting.get();
             result = JobPostingDTO.builder()
-                    .jobPostingId(post.getId())
-                    .position(post.getPosition())
-                    .compensation(post.getCompensation())
-                    .description(post.getDescription())
-                    .skill(post.getSkill())
-                    .companyId(post.getCompany().getId())
-                    .companyName(post.getCompany().getCompanyName())
-                    .country(post.getCompany().getCountry())
-                    .location(post.getCompany().getLocation())
+                    .jobPostingId(getPosting.getId())
+                    .position(getPosting.getPosition())
+                    .compensation(getPosting.getCompensation())
+                    .description(getPosting.getDescription())
+                    .skill(getPosting.getSkill())
+                    .companyId(getPosting.getCompany().getId())
+                    .companyName(getPosting.getCompany().getCompanyName())
+                    .country(getPosting.getCompany().getCountry())
+                    .location(getPosting.getCompany().getLocation())
                     .jobPostingIdList(otherPosting)
                     .build();
-        }
+
 
         return result;
 
