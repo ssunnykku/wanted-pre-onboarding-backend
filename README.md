@@ -58,10 +58,6 @@
 
 ### exception
 - @RestControllerAdvice를 활용한 전역 예외처리
-  <p align="center">
-   <img src="images/exceptionEx.png"  width="450"/>
-   <img src="images/exceptionEx2.png"  width="450"/>
-  </p>
 
 ### 느낀점
 - 코드를 수정할 때마다 수동으로 빌드와 배포를 반복해야 했던 과정이 불편했습니다. 배포 자동화의 필요성을 느꼈습니다. 추후 배포 자동화를 학습/적용해 코드 변경 시 자동으로 빌드하고 배포할 수 있도록 하여 개발 효율성을 높이고자 합니다.
